@@ -1,0 +1,19 @@
+{
+    "name": "tec/npg",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tec\\Npg\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "nesbot/carbon": "^2.28",
+        "vlucas/phpdotenv": "^3.6",
+        "ttskch/select2-bootstrap4-theme": "^1.5",
+        "mikecao/flight": "^2.0"
+        
+    }
+}
