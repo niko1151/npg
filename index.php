@@ -7,7 +7,7 @@ use tec\npg\Controllers\UserController;
 require __DIR__ . '/vendor/autoload.php';
 
 session_start();
-
+include 'db_config.php';
 function isUserLoggedIn() {
   return isset($_SESSION['username']);
 }
