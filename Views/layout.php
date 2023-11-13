@@ -14,10 +14,12 @@
       }
 
       body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
     .navbar {
       background-color: #f2f2f2;
@@ -50,11 +52,13 @@
       background-color: #ddd;
     }
 
-    .footer {
-      background-color: #f2f2f2;
-      padding: 20px;
-      text-align: center;
-    }
+    footer {
+    margin-top: auto; 
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
 
     .footer p {
       margin: 0;
