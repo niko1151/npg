@@ -2,15 +2,12 @@
 
 use tec\npg;
 use tec\npg\Controllers\UserController;
+use tec\npg\Controllers\CategoryController;
 
 
 require __DIR__ . '/vendor/autoload.php';
 
-session_start();
-include 'db_config.php';
-function isUserLoggedIn() {
-  return isset($_SESSION['username']);
-}
+
 
 
 //Test 1233444
@@ -33,16 +30,10 @@ Flight::route('/login', function(){
   Flight::render('layout', array('title' => 'Login - NPG'));
 });
 
-Flight::route('/logout', function () {
-  // Handle logout logic (destroy session, etc.)
-  session_start();
-  session_destroy();
-  // Redirect to the homepage or login page
-  Flight::redirect('/');
-});
 
 Flight::route('/category', function(){
-  Flight::render('category', array('body'), 'body_content');
+  $Category = CategoryController::getAllCategory();
+  Flight::render('Category', ["Category"=>$Category], 'body_content');
   Flight::render('layout', array('title' => 'Kategori - NPG'));
 });
 
