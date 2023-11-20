@@ -4,7 +4,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Tec\\Npg\\": "src/"
+            "tec\\npg\\": "src/"
         }
     },
     "minimum-stability": "dev",
