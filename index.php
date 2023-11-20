@@ -1,8 +1,8 @@
 <?php
 
 use tec\npg;
-use tec\npg\Controllers\UserController;
-use tec\npg\Controllers\CategoryController;
+use tec\npg\Controllers\{UserController,CategoryController, ProductController};
+
 
 
 require __DIR__ . '/vendor/autoload.php';
@@ -35,6 +35,12 @@ Flight::route('/category', function(){
   $Category = CategoryController::getAllCategory();
   Flight::render('Category', ["Category"=>$Category], 'body_content');
   Flight::render('layout', array('title' => 'Kategori - NPG'));
+});
+
+Flight::route('/product', function(){
+  $Product = ProductController::getAllProducts();
+  Flight::render('Product', ["Product"=>$Product], 'body_content');
+  Flight::render('layout', array('title' => 'Produkter - NPG'));
 });
 
 Flight::start();
