@@ -1,6 +1,5 @@
 <?php
 
-use tec\npg;
 use tec\npg\Controllers\UserController;
 use tec\npg\Controllers\CategoryController;
 
@@ -8,9 +7,6 @@ use tec\npg\Controllers\CategoryController;
 require __DIR__ . '/vendor/autoload.php';
 
 
-
-
-//Test 1233444
 // Load environment variables from .env file in the project root directory.
 // $dotenv = Dotenv\Dotenv::create(__DIR__);
 // $dotenv->load();
@@ -21,11 +17,12 @@ Flight::route('/', function(){
  });
 
  Flight::route('/about', function(){
-   Flight::render('about', array('body'), 'body_content');
-   Flight::render('layout', array('title' => 'Om os - NPG'));
+  Flight::render('about', array('body'), 'body_content');
+  Flight::render('layout', array('title' => 'Om os - NPG'));
 });
 
 Flight::route('/login', function(){
+  $login = UserController::checkUserLogin();
   Flight::render('login', array('body'), 'body_content');
   Flight::render('layout', array('title' => 'Login - NPG'));
 });

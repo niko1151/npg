@@ -20,24 +20,24 @@
 // }
 
 // Check if the form is submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check the username and password (replace with your authentication logic)
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//     // Check the username and password (replace with your authentication logic)
+//     $username = $_POST['username'];
+//     $password = $_POST['password'];
 
-    // Replace this with your actual authentication logic (e.g., database query)
-    if ($username === 'test' && $password === 'test1') {
-        // Authentication successful; store the username in the session
-        $_SESSION['username'] = $username;
+//     // Replace this with your actual authentication logic (e.g., database query)
+//     if ($username === 'test' && $password === 'test1') {
+//         // Authentication successful; store the username in the session
+//         $_SESSION['username'] = $username;
 
-        // Redirect to the home page or dashboard
-        header('Location: /npg');
-        exit;
-    } else {
-        $error_message = 'Invalid username or password';
-    }
-}
-?>
+//         // Redirect to the home page or dashboard
+//         header('Location: /npg');
+//         exit;
+//     } else {
+//         $error_message = 'Invalid username or password';
+//     }
+// }
+// ?>
 
 <!DOCTYPE html>
 <html lang="en">
