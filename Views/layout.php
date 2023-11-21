@@ -21,36 +21,50 @@
     flex-direction: column;
 }
 
-    .navbar {
-      background-color: #f2f2f2;
-      padding: 10px;
-    }
+.navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2;
+        }
 
-    .navbar ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: flex-end;
-    }
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
 
-    .navbar li {
-      margin-right: 10px;
-    }
+        .navbar li {
+            margin-right: 10px;
+        }
 
-    .navbar li:last-child {
-      margin-right: 0;
-    }
+        .navbar li:last-child {
+            margin-right: 0;
+        }
 
-    .navbar a {
-      text-decoration: none;
-      padding: 8px 16px;
-      color: #333;
-    }
+        .navbar .left-links {
+            display: flex;
+            align-items: center;
+        }
 
-    .navbar a:hover {
-      background-color: #ddd;
-    }
+        .navbar .right-links {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            padding: 8px 16px;
+            color: #333;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+        }
 
     footer {
     margin-top: auto; 
@@ -94,16 +108,23 @@
 		  <div class="topBar">NPG</div>
     </div>
     <div class="navbar">
-    <ul>
-      <li><a href="/npg">Forside</a></li>
-      <li><a href="category">Kategorier</a></li>
-      <li><a href="about">Om os</a></li>
-      <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
-        <li><a href="logout">logout</a></li>
-      <?php } else { ?>
-        <li><a href="login">Log ind</a></li>
-      <?php } ?>
-    </ul>
+        <ul class="left-links">
+            <!-- Left-aligned navigation links -->
+            <li><a href="/npg">Forside</a></li>
+            <li><a href="category">Kategorier</a></li>
+            <li><a href="about">Om os <?= Flight::get('login_id') ?></a></li>
+        </ul>
+        <ul class="right-links">
+            <!-- Right-aligned navigation links -->
+            <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
+                <li><a href="logout">logout</a></li>
+
+                <li><a href="<?= getenv('BASE_URL')?>/profile/<?= Flight::get('login_id') ?>" role="button">Profil</a></li>
+
+            <?php } else { ?>
+                <li><a href="login">Log ind</a></li>
+            <?php } ?>
+        </ul>
     </div>
 
     <main role="main" class="container">
