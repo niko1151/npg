@@ -98,7 +98,11 @@
       <li><a href="/npg">Forside</a></li>
       <li><a href="category">Kategorier</a></li>
       <li><a href="about">Om os</a></li>
-      <li><a href="login">Log ind</a></li>
+      <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
+        <li><a href="logout">logout</a></li>
+      <?php } else { ?>
+        <li><a href="login">Log ind</a></li>
+      <?php } ?>
     </ul>
     </div>
 

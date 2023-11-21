@@ -1,9 +1,7 @@
 <?php
 namespace tec\npg\Controllers;
 
-// use tec\npg\PDO;
-include 'db_config.php';
-
+use PDO;
 
 class UserController
 {
@@ -16,13 +14,22 @@ class UserController
 
         return $result;
     }
-    public static function checkUserLogin()
+    public static function checkUserLogin($email, $adgangskode)
     {
-        $stmnt = PDO::getInstance()->prepare("SELECT * FROM kunder where email = ? && adgangskode = ?;");
-        $stmnt->execute([]);
-        $result = $stmnt->fetchObject();
+        try {
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $stmnt = $pdo->prepare("SELECT * FROM kunder where email = :email && adgangskode = :adgangskode;");
+            $stmnt->execute(['email'=>$email, 'adgangskode'=>$adgangskode]);
+            $result = $stmnt->fetchAll(PDO::FETCH_OBJ); // Hent data som objekter
 
-        return $result;
+            return $result;
+        } catch (PDOException $e) {
+            // Log eller håndter fejlen efter behov
+            error_log("Error fetching categories: " . $e->getMessage());
+            return []; // Returner en tom liste i tilfælde af fejl
+        }
     }
 
     public static function getAllUsers() : array
