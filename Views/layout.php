@@ -85,6 +85,8 @@
     .ml-auto {
       margin-left: auto !important;
     }
+
+    
   </style>
 
   <meta charset="utf-8">
@@ -100,7 +102,7 @@
       <li><a href="/npg">Forside</a></li>
       <li><a href="category">Kategorier</a></li>
       <li><a href="about">Om os</a></li>
-      <li><a href="product">Product</a></li>
+      <li><a href="product">Alle Produkter</a></li>
       <li><a href="login">Log ind</a></li>
       <li class="ml-auto"><a href="checkout">Checkout</a></li>
     </ul>
@@ -119,9 +121,8 @@
       <li><a href="/npg">Forside</a></li>
       <li><a href="category">Kategorier</a></li>
       <li><a href="about">Om os</a></li>
-      <li><a href="product">Product</a></li>
+      <li><a href="product">Alle Produkter</a></li>
       <li><a href="login">Log ind</a></li>
-      <li class="ml-auto"><a href="checkout">Checkout</a></li>
     </ul>
     <p>&copy; <?php echo date('Y'); ?> Min Hjemmeside. Alle rettigheder forbeholdes.</p>
   </footer>

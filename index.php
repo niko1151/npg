@@ -32,14 +32,31 @@ Flight::route('/login', function(){
 
 
 Flight::route('/category', function(){
-  $Category = CategoryController::getAllCategory();
-  Flight::render('Category', ["Category"=>$Category], 'body_content');
+  $categoryController = new \tec\npg\Controllers\CategoryController();
+  $categories = $categoryController->getAllCategories();
+  Flight::render('Category', ["categories" => $categories], 'body_content');
   Flight::render('layout', array('title' => 'Kategori - NPG'));
 });
 
 Flight::route('/product', function(){
   $Product = ProductController::getAllProducts();
   Flight::render('Product', ["Product"=>$Product], 'body_content');
+  Flight::render('layout', array('title' => 'Produkter - NPG'));
+});
+
+Flight::route('/product_details/@id', function($id){
+  // Hent faktiske produktdata baseret på produkt-id
+  $productDetails = ProductController::getProductDetails($id);
+  // Send produktdata til visning
+  Flight::render('product_details', ['productDetails' => $productDetails], 'body_content');
+  Flight::render('layout', array('title' => 'Produktdetaljer - NPG'));
+});
+
+Flight::route('/category_products/@id', function($id){
+  // Hent faktiske produktdata baseret på kategori-id
+  $categoryProducts = CategoryController::getProductsByCategory($id);
+  // Send produktdata til visning
+  Flight::render('category_products', ['categoryProducts' => $categoryProducts], 'body_content');
   Flight::render('layout', array('title' => 'Produkter - NPG'));
 });
 
