@@ -8,12 +8,9 @@ use tec\npg\Controllers\{UserController,CategoryController, ProductController};
 require __DIR__ . '/vendor/autoload.php';
 
 
-
-
-//Test 1233444
-// Load environment variables from .env file in the project root directory.
-// $dotenv = Dotenv\Dotenv::create(__DIR__);
-// $dotenv->load();
+ //Load environment variables from .env file in the project root directory.
+ $dotenv = Dotenv\Dotenv::create(__DIR__);
+ $dotenv->load();
 
 Flight::route('/', function(){
   Flight::render('frontpage', array('body'), 'body_content');
@@ -32,8 +29,9 @@ Flight::route('/login', function(){
 
 
 Flight::route('/category', function(){
-  $categoryController = new \tec\npg\Controllers\CategoryController();
-  $categories = $categoryController->getAllCategories();
+  //$categoryController = new \tec\npg\Controllers\CategoryController();
+  //$categories = $categoryController->getAllCategories();
+  $categories = CategoryController::getAllCategories();
   Flight::render('Category', ["categories" => $categories], 'body_content');
   Flight::render('layout', array('title' => 'Kategori - NPG'));
 });

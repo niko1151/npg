@@ -100,11 +100,11 @@
   <div class="navbar">
     <ul>
       <li><a href="/npg">Forside</a></li>
-      <li><a href="category">Kategorier</a></li>
-      <li><a href="about">Om os</a></li>
-      <li><a href="product">Alle Produkter</a></li>
-      <li><a href="login">Log ind</a></li>
-      <li class="ml-auto"><a href="checkout">Checkout</a></li>
+      <li><a href="<?= getenv('BASE_URL')?>/category">Kategorier</a></li>
+      <li><a href="<?= getenv('BASE_URL')?>/about">Om os</a></li>
+      <li><a href="<?= getenv('BASE_URL')?>/product">Alle Produkter</a></li>
+      <li><a href="<?= getenv('BASE_URL')?>/login">Log ind</a></li>
+      <li class="ml-auto"><a href="<?= getenv('BASE_URL')?>/checkout">Checkout</a></li>
     </ul>
   </div>
 

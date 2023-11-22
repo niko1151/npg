@@ -7,19 +7,7 @@ use PDOException;
 
 class ProductController 
 {
-    private static $pdo;
 
-    public function __construct()
-    {
-        // Initialiser PDO-forbindelsen i konstruktøren
-        try {
-            self::$pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
-            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            // Log eller håndter fejlen efter behov
-            error_log("Error connecting to database: " . $e->getMessage());
-        }
-    }
 
     public static function getAllProducts() : array
     {
@@ -71,7 +59,9 @@ class ProductController
     public static function getProductById($productId)
     {
         try {
-            $stmnt = self::$pdo->prepare("SELECT * FROM produkter WHERE produkt_id = :id");
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmnt = $pdo->prepare("SELECT * FROM produkter WHERE produkt_id = :id");
             $stmnt->bindParam(':id', $productId);
             $stmnt->execute();
             $result = $stmnt->fetch(PDO::FETCH_OBJ);
@@ -87,7 +77,9 @@ class ProductController
     public static function addProduct($productName, $price, $categoryId, $description)
     {
         try {
-            $stmnt = self::$pdo->prepare(
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmnt = $pdo->prepare(
                 "INSERT INTO produkter (produkt_navn, pris, kategori_id, beskrivelse) 
                 VALUES (:name, :price, :categoryId, :description)"
             );
@@ -108,7 +100,9 @@ class ProductController
     public static function updateProduct($productId, $productName, $price, $categoryId, $description)
     {
         try {
-            $stmnt = self::$pdo->prepare(
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmnt = $pdo->prepare(
                 "UPDATE produkter 
                 SET produkt_navn = :name, pris = :price, kategori_id = :categoryId, beskrivelse = :description
                 WHERE produkt_id = :id"
@@ -131,7 +125,9 @@ class ProductController
     public static function deleteProduct($productId)
     {
         try {
-            $stmnt = self::$pdo->prepare("DELETE FROM produkter WHERE produkt_id = :id");
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $stmnt = $pdo->prepare("DELETE FROM produkter WHERE produkt_id = :id");
             $stmnt->bindParam(':id', $productId);
             $stmnt->execute();
 

@@ -17,7 +17,7 @@
                         <p class="card-text"><strong>Pris:</strong> <?= number_format($product->pris, 2); ?> DKK</p>
                         <p class="card-text"><strong>Kategori:</strong> <?= $product->kategori_navn; ?></p>
                         <!-- Ny knap til detaljeret visning -->
-                        <a href="product_details/<?= $product->produkt_id; ?>" class="btn btn-info btn-sm">
+                        <a href="<?= getenv('BASE_URL')?>/product_details/<?= $product->produkt_id; ?>" class="btn btn-info btn-sm">
                             Vis Detaljer
                         </a>
                         <button class="btn btn-primary btn-sm add-to-cart" data-product-id="<?= $product->produkt_id; ?>">
