@@ -109,18 +109,14 @@
     </div>
     <div class="navbar">
         <ul class="left-links">
-            <!-- Left-aligned navigation links -->
             <li><a href="/npg">Forside</a></li>
-            <li><a href="category">Kategorier</a></li>
-            <li><a href="about">Om os <?= Flight::get('login_id') ?></a></li>
+            <li><a href="<?= getenv('BASE_URL')?>/category">Kategorier</a></li>
+            <li><a href="<?= getenv('BASE_URL')?>/about">Om os</a></li>
         </ul>
         <ul class="right-links">
-            <!-- Right-aligned navigation links -->
             <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
-                <li><a href="logout">logout</a></li>
-
-                <li><a href="<?= getenv('BASE_URL')?>/profile/<?= Flight::get('login_id') ?>" role="button">Profil</a></li>
-
+                <li><a href="<?= getenv('BASE_URL')?>/logout">logout</a></li>
+                <li><a href="<?= getenv('BASE_URL')?>/profile/<?php echo $_SESSION["user_id"]; ?>" role="button">Profil</a></li>
             <?php } else { ?>
                 <li><a href="login">Log ind</a></li>
             <?php } ?>
@@ -140,8 +136,8 @@
       <p>Telegrafvej 9, 2750 Ballerup</p>
       <ul>
         <li><a href="/npg">Forside</a></li>
-        <li><a href="category">Kategorier</a></li>
-        <li><a href="about">Om os</a></li>
+        <li><a href="<?= getenv('BASE_URL')?>/category">Kategorier</a></li>
+        <li><a href="<?= getenv('BASE_URL')?>about">Om os</a></li>
       </ul>
       <p>&copy; <?php echo date('Y'); ?> Min Hjemmeside. Alle rettigheder forbeholdes.</p>
     </footer>

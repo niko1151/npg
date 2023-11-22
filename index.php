@@ -7,7 +7,6 @@ require __DIR__ . '/vendor/autoload.php';
 session_start();
 
 
-
 //Load environment variables from .env file in the project root directory.
 $dotenv = Dotenv\Dotenv::create(__DIR__);
 $dotenv->load();
@@ -30,21 +29,14 @@ Flight::route('/login', function(){
 Flight::route('/checklogin', function(){
   $email = Flight::request()->data->mail;
   $adgangskode = Flight::request()->data->password;
-  $id = Flight::request()->data->kunde_id;
 
   if($login = UserController::checkUserLogin($email, $adgangskode))
   {
-    // Set session variables upon successful login
-    //$_SESSION['user_id'] = $login->kunde_id; // Store user ID or any relevant data
+    $_SESSION['user_id'] = $login->kunde_id; // Store user ID or any relevant data
     $_SESSION['logged_in'] = true; // Set a flag to indicate the user is logged in
 
-    Flight::set('login_id', $login->kunde_id);
-
-  // Elsewhere in your application
     Flight::render("error",["error_title" => "Sådan!!", "message" => "Du er nu logget ind"], "body_content");
-    //Flight::redirect(getenv('BASE_URL')."/profile/".$login->kunde_id);
     Flight::render("layout",["title" => "Login - NPG"]);    
-
   }
   else
   {

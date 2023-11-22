@@ -47,9 +47,11 @@
     <div class="container">
         <div class="user-info">
             <h2>User Information</h2>
-            <p><strong>Name:</strong> <?= $profile->fornavn." ". $profile->efternavn; ?></p>
-            <p><strong>Email:</strong> johndoe@example.com</p>
-            <!-- Add more user-related information here -->
+            <p><strong>Navn:</strong> <?= $profile->fornavn." ". $profile->efternavn; ?></p>
+            <p><strong>Email:</strong> <?= $profile->email; ?></p>
+            <p><strong>Telefon Nr.:</strong> <?= $profile->telefonnummer; ?></p>
+            <p><strong>Adresse:</strong> <?= $profile->adresse; ?></p>
+            <p><strong>By & Postnummer:</strong> <?= $profile->by_navn." ".$profile->postnummer; ?></p>
         </div>
 
         <div class="order-history">

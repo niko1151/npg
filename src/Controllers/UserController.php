@@ -24,14 +24,8 @@ class UserController
         }
     }
 
-
     public static function getUser($id)
     {
-        // $stmnt = PDO::getInstance()->prepare("SELECT * FROM kunder where kunde_id = ?;");
-        // $stmnt->execute([$id]);
-        // $result = $stmnt->fetchObject();
-
-        // return $result;
         try {
             $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
