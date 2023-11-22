@@ -1,5 +1,6 @@
 <?php
 
+
 use tec\npg;
 use tec\npg\Controllers\{UserController,CategoryController, ProductController};
 
@@ -18,8 +19,8 @@ Flight::route('/', function(){
  });
 
  Flight::route('/about', function(){
-   Flight::render('about', array('body'), 'body_content');
-   Flight::render('layout', array('title' => 'Om os - NPG'));
+  Flight::render('about', array('body'), 'body_content');
+  Flight::render('layout', array('title' => 'Om os - NPG'));
 });
 
 Flight::route('/login', function(){
@@ -27,10 +28,37 @@ Flight::route('/login', function(){
   Flight::render('layout', array('title' => 'Login - NPG'));
 });
 
+Flight::route('/checklogin', function(){
+  $email = Flight::request()->data->mail;
+  $adgangskode = Flight::request()->data->password;
+  $id = Flight::request()->query->kunde_id;
+
+  if($login = UserController::checkUserLogin($email, $adgangskode))
+  {
+    // Set session variables upon successful login
+    $_SESSION['user_id'] = $id; // Store user ID or any relevant data
+    $_SESSION['logged_in'] = true; // Set a flag to indicate the user is logged in
+    Flight::render("error",["error_title" => "Sådan!!", "message" => "Du er nu logget ind"], "body_content");
+    Flight::render("layout",["title" => "Login - NPG"]);    
+  }
+  else
+  {
+    Flight::render("error",["error_title" => "ups", "message" => "Din Email og adgangskode passer ikke sammer"], "body_content");
+    Flight::render("layout",["title" => "Login - NPG"]);   
+  }
+});
+
+Flight::route('/logout', function(){
+  // Unset all session variables
+  session_unset();
+
+  // Destroy the session
+  session_destroy();
+  Flight::render("error",["error_title" => "Log ud", "message" => "Du er nu logget ud"], "body_content");
+  Flight::render("layout",["title" => "Login - NPG"]);   
+});
 
 Flight::route('/category', function(){
-  //$categoryController = new \tec\npg\Controllers\CategoryController();
-  //$categories = $categoryController->getAllCategories();
   $categories = CategoryController::getAllCategories();
   Flight::render('Category', ["categories" => $categories], 'body_content');
   Flight::render('layout', array('title' => 'Kategori - NPG'));

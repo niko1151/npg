@@ -122,7 +122,11 @@
       <li><a href="category">Kategorier</a></li>
       <li><a href="about">Om os</a></li>
       <li><a href="product">Alle Produkter</a></li>
-      <li><a href="login">Log ind</a></li>
+      <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
+        <li><a href="logout">logout</a></li>
+      <?php } else { ?>
+        <li><a href="login">Log ind</a></li>
+      <?php } ?>
     </ul>
     <p>&copy; <?php echo date('Y'); ?> Min Hjemmeside. Alle rettigheder forbeholdes.</p>
   </footer>
