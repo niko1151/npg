@@ -1,10 +1,8 @@
 <?php
-
-
 use tec\npg;
 use tec\npg\Controllers\{UserController,CategoryController, ProductController};
 
-
+session_start();
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -66,6 +64,7 @@ Flight::route('/profile/@id', function($id){
   $profile = UserController::getUser($id);
   Flight::render('profile', ["profile"=>$profile], 'body_content');
   Flight::render('layout', ['title' => 'Profile - NPG']);
+});
     
 Flight::route('/product', function(){
   $Product = ProductController::getAllProducts();
@@ -87,7 +86,6 @@ Flight::route('/category_products/@id', function($id){
   // Send produktdata til visning
   Flight::render('category_products', ['categoryProducts' => $categoryProducts], 'body_content');
   Flight::render('layout', array('title' => 'Produkter - NPG'));
-
 });
 
 Flight::start();
