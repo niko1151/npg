@@ -1,14 +1,17 @@
 <?php
-use tec\npg\Controllers\UserController;
-use tec\npg\Controllers\CategoryController;
+
+
+use tec\npg;
+use tec\npg\Controllers\{UserController,CategoryController, ProductController};
+
+
 
 require __DIR__ . '/vendor/autoload.php';
 
-session_start();
 
-// Load environment variables from .env file in the project root directory.
-// $dotenv = Dotenv\Dotenv::create(__DIR__);
-// $dotenv->load();
+ //Load environment variables from .env file in the project root directory.
+ $dotenv = Dotenv\Dotenv::create(__DIR__);
+ $dotenv->load();
 
 Flight::route('/', function(){
   Flight::render('frontpage', array('body'), 'body_content');
@@ -56,9 +59,31 @@ Flight::route('/logout', function(){
 });
 
 Flight::route('/category', function(){
-  $Category = CategoryController::getAllCategory();
-  Flight::render('Category', ["Category"=>$Category], 'body_content');
+  $categories = CategoryController::getAllCategories();
+  Flight::render('Category', ["categories" => $categories], 'body_content');
   Flight::render('layout', array('title' => 'Kategori - NPG'));
+});
+
+Flight::route('/product', function(){
+  $Product = ProductController::getAllProducts();
+  Flight::render('Product', ["Product"=>$Product], 'body_content');
+  Flight::render('layout', array('title' => 'Produkter - NPG'));
+});
+
+Flight::route('/product_details/@id', function($id){
+  // Hent faktiske produktdata baseret på produkt-id
+  $productDetails = ProductController::getProductDetails($id);
+  // Send produktdata til visning
+  Flight::render('product_details', ['productDetails' => $productDetails], 'body_content');
+  Flight::render('layout', array('title' => 'Produktdetaljer - NPG'));
+});
+
+Flight::route('/category_products/@id', function($id){
+  // Hent faktiske produktdata baseret på kategori-id
+  $categoryProducts = CategoryController::getProductsByCategory($id);
+  // Send produktdata til visning
+  Flight::render('category_products', ['categoryProducts' => $categoryProducts], 'body_content');
+  Flight::render('layout', array('title' => 'Produkter - NPG'));
 });
 
 Flight::start();
