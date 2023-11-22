@@ -88,4 +88,69 @@ Flight::route('/category_products/@id', function($id){
   Flight::render('layout', array('title' => 'Produkter - NPG'));
 });
 
+Flight::route('/admin', function(){
+  $Products = ProductController::getAllProducts();
+  $Categories = CategoryController::getAllCategories();
+  Flight::render('admin', ['Categories' => $Categories, 'Products' => $Products], 'body_content');
+  Flight::render('layout', array('title' => 'Produkter - NPG'));
+});
+
+// Route to handle form submission for categories
+Flight::route('/admin/categories/process', function(){
+  $catid = Flight::request()->data->category_id;
+  $cat_navn = Flight::request()->data->category_name;
+  if ($catid) {
+    // Opdater eksisterende kategori
+    CategoryController::updateCategory($catid, $cat_navn);
+} else {
+    // Opret ny kategori
+    CategoryController::addCategory($cat_navn);
+}
+  Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
+});
+
+// Route to handle form submission for products
+Flight::route('/admin/products/process', function(){
+  $postData = Flight::request()->data->getData();
+
+  // Process the form data for products
+  $productName = $postData['product_name'];
+  $categoryId = $postData['product_category'];
+  $quantity = $postData['product_quantity'];
+  $price = $postData['product_price'];
+  $description = $postData['product_description'];
+  $imageUrl = $postData['product_image'];
+  $productId = $postData['product_id']; // Dette felt vil kun være til stede ved opdatering
+
+  if (isset($productId)) {
+      // Opdater eksisterende produkt
+      ProductController::updateProduct($productId, $productName, $categoryId, $quantity, $price, $description, $imageUrl);
+  } else {
+      // Opret nyt produkt
+      ProductController::addProduct($productName, $categoryId, $quantity, $price, $description, $imageUrl);
+  }
+
+  Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
+});
+
+// Route to handle form submission for deleting categories
+Flight::route('/admin/categories/delete/@id', function($cat_id){
+  $cat_id = Flight::request()->data->category_id_to_delete;
+
+  // Process the form data for deleting categories
+  CategoryController::deleteCategory($cat_id);
+
+  Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
+});
+
+// Route to handle form submission for deleting products
+Flight::route('/admin/products/delete/@id', function($id){
+
+
+  // Process the form data for deleting products
+  ProductController::deleteProduct($id);
+  
+  Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
+});
+
 Flight::start();
