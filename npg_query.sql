@@ -92,9 +92,17 @@ CREATE TABLE kunder (
     adgangskode VARCHAR(100) NOT NULL,
     adresse VARCHAR(255),
     by_navn VARCHAR(50),
-    postnummer VARCHAR(20)
+    postnummer VARCHAR(20),
+    telefonnummer int,
+    adminP int
 );
 
+
+INSERT INTO kunder (fornavn, efternavn, email, adgangskode, adresse, by_navn, postnummer, telefonnummer, adminP) VALUES
+    ('Nikolai', 'Flodin', 'nikolai@gmail.com', 'test123', 'telegrafvej 9', 'Ballerup', 2750, 42641422,1),
+    ('Mathias', 'Plum', 'plum@gmail.com', 'onkel123', 'telegrafvej 19', 'Skovlunde ', 2740,12345678,1 ),
+    ('Bo', 'Andersen', 'bo@gmail.com', 'bo123', 'telegrafvej 29', 'Herlev', 2730, 11223344,0);
+    
 -- Opret tabellen 'ordrer' til at gemme ordreoplysninger
 CREATE TABLE ordrer (
     ordre_id INT AUTO_INCREMENT PRIMARY KEY,
