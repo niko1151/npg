@@ -145,6 +145,7 @@ Flight::route('/admin/categories/delete/@id', function($cat_id){
 
 // Route to handle form submission for deleting products
 Flight::route('/admin/products/delete/@id', function($id){
+  $prod_id = Flight::request()->data->category_id_to_delete;
 
 
   // Process the form data for deleting products
@@ -152,5 +153,19 @@ Flight::route('/admin/products/delete/@id', function($id){
   
   Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
 });
+
+Flight::route('/admin/category/edit/@cat_id', function($cat_id){
+  $editcategory = CategoryController::getCategoryById($cat_id);
+  Flight::render('editcategory', ["editcategory"=>$editcategory, "cat_id" => $cat_id], 'body_content');
+  Flight::render('layout', ['title' => 'editcategory - NPG']);
+});
+    
+Flight::route('/admin/product/edit/@prod_id', function($prod_id){
+  $editproduct = ProductController::getProductById($prod_id);
+  $Categories = CategoryController::getAllCategories();
+  Flight::render('editproduct', ["editproduct" => $editproduct, "Categories" => $Categories, "prod_id" => $prod_id], 'body_content');
+  Flight::render('layout', ['title' => 'Rediger produkt - NPG']);
+});
+
 
 Flight::start();

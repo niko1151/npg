@@ -132,7 +132,7 @@
                  <li><a href="<?= getenv('BASE_URL')?>/admin">Admin</a></li>
                 <?php } ?>
             <?php } else { ?>
-                <li><a href="login">Log ind</a></li>
+                <li><a href="<?= getenv('BASE_URL')?>/login">Log ind</a></li>
             <?php } ?>
             <li class="ml-auto"><a href="<?= getenv('BASE_URL')?>/checkout">Checkout</a></li>
         </ul>
