@@ -131,7 +131,7 @@
             <?php } else { ?>
                 <li><a href="login">Log ind</a></li>
             <?php } ?>
-            <li class="ml-auto"><a href="<?= getenv('BASE_URL')?>/checkout">Checkout</a></li>
+            <li class="ml-auto"><a href="<?= getenv('BASE_URL')?>/cart">Kurv</a></li>
         </ul>
     </div>
 

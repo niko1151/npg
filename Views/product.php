@@ -55,13 +55,32 @@
             });
         });
 
-        // Tilføj til kurven knap
-        document.querySelectorAll('.add-to-cart').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var productId = this.getAttribute('data-product-id');
-                // Implementer logik for at tilføje produktet til indkøbskurven, f.eks. via AJAX
-                alert('Produktet med ID ' + productId + ' blev tilføjet til kurven!');
-            });
-        });
+        // // Tilføj til kurven knap
+        // document.querySelectorAll('.add-to-cart').forEach(function (button) {
+        //     button.addEventListener('click', function () {
+        //         var productId = this.getAttribute('data-product-id');
+        //         // Implementer logik for at tilføje produktet til indkøbskurven, f.eks. via AJAX
+        //         alert('Produktet med ID ' + productId + ' blev tilføjet til kurven!');
+        //     });
+        // });
     });
+
+    $('.add-to-cart').on('click', function() {
+    var productId = $(this).data('product-id');
+
+    $.ajax({
+        type: 'POST',
+        url: 'ProductController/addToCart/' + productId,
+        success: function(response) {
+            if (response === 'success') {
+                alert('Product added to cart!');
+            } else {
+                console.error(response);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+});
 </script>

@@ -2,6 +2,7 @@
 namespace tec\npg\Controllers;
 
 use PDO;
+use PDOException;
 
 class UserController
 {

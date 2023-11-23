@@ -7,8 +7,6 @@ use PDOException;
 
 class ProductController 
 {
-
-
     public static function getAllProducts() : array
     {
         try {
@@ -22,7 +20,6 @@ class ProductController
             $stmnt->execute();
             $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
 
-            
 
             return $result;
         } catch (PDOException $e) {
@@ -33,28 +30,28 @@ class ProductController
     }
 
     public static function getProductDetails($productId)
-{
-    try {
-        $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    {
+        try {
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $stmnt = $pdo->prepare(
-            "SELECT produkter.*, kategorier.kategori_navn 
-            FROM produkter 
-            INNER JOIN kategorier ON produkter.kategori_id = kategorier.kategori_id
-            WHERE produkter.produkt_id = :productId;"
-        );
-        $stmnt->bindParam(':productId', $productId, PDO::PARAM_INT);
-        $stmnt->execute();
-        $result = $stmnt->fetch(PDO::FETCH_OBJ); // Fetch as object instead of array
+            $stmnt = $pdo->prepare(
+                "SELECT produkter.*, kategorier.kategori_navn 
+                FROM produkter 
+                INNER JOIN kategorier ON produkter.kategori_id = kategorier.kategori_id
+                WHERE produkter.produkt_id = :productId;"
+            );
+            $stmnt->bindParam(':productId', $productId, PDO::PARAM_INT);
+            $stmnt->execute();
+            $result = $stmnt->fetch(PDO::FETCH_OBJ); // Fetch as object instead of array
 
-        return $result;
-    } catch (PDOException $e) {
-        // Log eller håndter fejlen efter behov
-        error_log("Error fetching product details: " . $e->getMessage());
-        return null;
+            return $result;
+        } catch (PDOException $e) {
+            // Log eller håndter fejlen efter behov
+            error_log("Error fetching product details: " . $e->getMessage());
+            return null;
+        }   
     }
-}
 
     public static function getProductById($productId)
     {
@@ -71,6 +68,32 @@ class ProductController
             // Log eller håndter fejlen efter behov
             error_log("Error fetching product by ID: " . $e->getMessage());
             return null;
+        }
+    }
+
+    public function addToCart($productId)
+    {
+        try {
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $stmnt = $pdo->prepare("SELECT * FROM produkter WHERE produkt_id = :id");
+            $stmnt->bindParam(':id', $productId);
+            $stmnt->execute();
+            $result = $stmnt->fetch(PDO::FETCH_OBJ);
+    
+            // Check if the product exists
+            if ($result) {
+                // Assuming $_SESSION['cart'] is your cart array
+                $_SESSION['cart'][] = $result;
+                return 'success'; // Indicate success
+            } else {
+                return 'Product not found';
+            }
+        } catch (PDOException $e) {
+            // Handle any potential database connection or query errors
+            error_log("Error adding product to cart: " . $e->getMessage());
+            return 'Error adding product to cart';
         }
     }
 
