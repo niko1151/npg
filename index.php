@@ -111,46 +111,53 @@ Flight::route('/admin/categories/process', function(){
 
 // Route to handle form submission for products
 Flight::route('/admin/products/process', function(){
-  $postData = Flight::request()->data->getData();
+    $productName = Flight::request()->data->product_name;
+    $categoryId = Flight::request()->data->product_category;
+    $quantity = Flight::request()->data->product_quantity;
+    $price = Flight::request()->data->product_price;
+    $description = Flight::request()->data->product_description;
+    $imageUrl = Flight::request()->data->product_image;
+    ProductController::addProduct($productName, $categoryId,$quantity, $price, $description, $imageUrl);
 
-  // Process the form data for products
-  $productName = $postData['product_name'];
-  $categoryId = $postData['product_category'];
-  $quantity = $postData['product_quantity'];
-  $price = $postData['product_price'];
-  $description = $postData['product_description'];
-  $imageUrl = $postData['product_image'];
-  $productId = $postData['product_id']; // Dette felt vil kun være til stede ved opdatering
-
-  if (isset($productId)) {
-      // Opdater eksisterende produkt
-      ProductController::updateProduct($productId, $productName, $categoryId, $quantity, $price, $description, $imageUrl);
-  } else {
-      // Opret nyt produkt
-      ProductController::addProduct($productName, $categoryId, $quantity, $price, $description, $imageUrl);
-  }
 
   Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
 });
 
-// Route to handle form submission for deleting categories
+Flight::route('/admin/products/update', function(){
+  $productId = Flight::request()->data->product_id_to_edit;
+  $edit_product_name = Flight::request()->data->edit_product_name;
+  $edit_product_category_id = Flight::request()->data->edit_product_category_id;
+  $edit_product_quantity = Flight::request()->data->edit_product_quantity;
+  $edit_product_price = Flight::request()->data->edit_product_price;
+  $edit_product_description = Flight::request()->data->edit_product_description;
+  $edit_product_imageUrl = Flight::request()->data->edit_product_imageUrl;
+  ProductController::updateProduct($productId,$edit_product_name, $edit_product_category_id,$edit_product_quantity, $edit_product_price, $edit_product_description, $edit_product_imageUrl);
+Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
+});
+
+Flight::route('/admin/categories/update', function(){
+  $categoryId = Flight::request()->data->edit_category_id;
+  $edit_Category_Name = Flight::request()->data->edit_category_name;
+  CategoryController::updateCategory($categoryId, $edit_Category_Name);
+
+  Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
+});
+
+// DELETE
 Flight::route('/admin/categories/delete/@id', function($cat_id){
   $cat_id = Flight::request()->data->category_id_to_delete;
-
   // Process the form data for deleting categories
   CategoryController::deleteCategory($cat_id);
 
   Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
 });
 
-// Route to handle form submission for deleting products
-Flight::route('/admin/products/delete/@id', function($id){
-  $prod_id = Flight::request()->data->category_id_to_delete;
-
-
+//DELETE
+Flight::route('/admin/products/delete/@id', function($prod_id){
+  $prod_id = Flight::request()->data->product_id_to_delete;
   // Process the form data for deleting products
-  ProductController::deleteProduct($id);
-  
+  ProductController::deleteProduct($prod_id);
+
   Flight::redirect('/admin'); // Redirect tilbage til admin dashboard
 });
 

@@ -84,23 +84,25 @@ class CategoryController
     }
 
     public static function updateCategory($categoryId, $categoryName)
-    {
-        try {
-            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $stmnt = $pdo->prepare("UPDATE kategorier SET kategori_navn = :name WHERE kategori_id = :id");
-            $stmnt->bindParam(':id', $categoryId);
-            $stmnt->bindParam(':name', $categoryName);
-            $stmnt->execute();
+{
+    try {
+        $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $stmnt = $pdo->prepare(
+            "UPDATE kategorier 
+            SET kategori_navn = :kategori_navn
+            WHERE kategori_id = :kategori_id"
+        );
 
-            return true;
-        } catch (PDOException $e) {
-            // Log eller håndter fejlen efter behov
-            error_log("Fejl ved opdatering af kategori: " . $e->getMessage());
-            return false;
-        }
+        $stmnt->execute(['kategori_id' => $categoryId, 'kategori_navn' => $categoryName]);
+
+        return true;
+    } catch (PDOException $e) {
+        // Log eller håndter fejlen efter behov
+        error_log("Fejl ved opdatering af kategori: " . $e->getMessage());
+        return false;
     }
-
+}
     public static function deleteCategory($categoryId)
     {
         try {

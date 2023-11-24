@@ -79,10 +79,10 @@
 
      <!-- Inputfelter for redigering -->
         <label for="product_name">Produkt Navn:</label>
-        <input type="text" name="product_name" id="selectedValue" value="<?= isset($editproduct->produkt_navn) ? $editproduct->produkt_navn : ''; ?>" required>
+        <input type="text" name="edit_product_name" id="selectedValue" value="<?= isset($editproduct->produkt_navn) ? $editproduct->produkt_navn : ''; ?>" required>
 
         <label for="product_category">Vælg kategori:</label>
-        <select name="product_category" required>
+        <select name="edit_product_category_id" required>
            <option value="">Vælg kategori</option>
           <?php foreach ($Categories as $category): ?>
               <option value="<?php echo $category->kategori_id; ?>"><?php echo $category->kategori_navn; ?></option>
@@ -90,16 +90,16 @@
         </select>
 
         <label for="product_quantity">Antal:</label>
-        <input type="number" name="product_quantity" value="<?= isset($editproduct->antal) ? $editproduct->antal : ''; ?>" required>
+        <input type="number" name="edit_product_quantity" value="<?= isset($editproduct->antal) ? $editproduct->antal : ''; ?>" required>
 
         <label for="product_price">Pris:</label>
-        <input type="number" step="0.01" name="product_price" value="<?= isset($editproduct->pris) ? $editproduct->pris : ''; ?>" required>
+        <input type="number" step="0.01" name="edit_product_price" value="<?= isset($editproduct->pris) ? $editproduct->pris : ''; ?>" required>
 
         <label for="product_description">Beskrivelse:</label>
-        <textarea name="product_description" rows="4"><?= isset($editproduct->beskrivelse) ? $editproduct->beskrivelse : ''; ?></textarea>
+        <textarea name="edit_product_description" rows="4"><?= isset($editproduct->beskrivelse) ? $editproduct->beskrivelse : ''; ?></textarea>
 
         <label for="product_image">Billede URL:</label>
-        <input type="text" name="product_image" value="<?= isset($editproduct->billede_url) ? $editproduct->billede_url : ''; ?>">
+        <input type="text" name="edit_product_imageUrl" value="<?= isset($editproduct->billede_url) ? $editproduct->billede_url : ''; ?>">
 
         <!-- Opdater knap -->
         <button type="submit">Opdater</button>

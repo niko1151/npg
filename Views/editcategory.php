@@ -75,11 +75,11 @@
     <h2>Rediger Kategori</h2>
     <form method="post" action="<?= getenv('BASE_URL')?>/admin/categories/update" id="editCategoryForm">
         <!-- Inputfelt til fast kategoriID (kan skjules, hvis det ønskes) -->
-        <input type="hidden" name="category_id_to_edit" id="category_id_to_edit" value="<?= $cat_id; ?>">
+        <input type="hidden" name="edit_category_id" id="category_id_to_edit" value="<?= $cat_id; ?>">
 
         <!-- Inputfelter for redigering -->
         <label for="category_name">Kategori Navn:</label>
-        <input type="text" name="category_name" value="<?= isset($editcategory->kategori_navn) ? $editcategory->kategori_navn : ''; ?>" required>
+        <input type="text" name="edit_category_name" value="<?= isset($editcategory->kategori_navn) ? $editcategory->kategori_navn : ''; ?>" required>
 
         <!-- Opdater knap -->
         <button type="submit">Opdater</button>
