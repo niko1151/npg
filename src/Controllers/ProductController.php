@@ -71,30 +71,38 @@ class ProductController
         }
     }
 
-    public function addToCart($productId)
+    public static function addToCart($id)
     {
         try {
             $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
-            $stmnt = $pdo->prepare("SELECT * FROM produkter WHERE produkt_id = :id");
-            $stmnt->bindParam(':id', $productId);
-            $stmnt->execute();
+            $stmnt = $pdo->prepare("SELECT * FROM produkter WHERE produkt_id = ?");
+            $stmnt->execute([$id]);
             $result = $stmnt->fetch(PDO::FETCH_OBJ);
     
-            // Check if the product exists
-            if ($result) {
-                // Assuming $_SESSION['cart'] is your cart array
-                $_SESSION['cart'][] = $result;
-                return 'success'; // Indicate success
-            } else {
-                return 'Product not found';
-            }
-        } catch (PDOException $e) {
-            // Handle any potential database connection or query errors
-            error_log("Error adding product to cart: " . $e->getMessage());
-            return 'Error adding product to cart';
+        //     if ($result) {
+        //         $_SESSION['cart'][] = $result;
+        //         echo 'success'; // Return 'success' directly (no need for return)
+        //     } else {
+        //         echo 'Product not found'; // Return 'Product not found' if the product doesn't exist
+        //     }
+        // } catch (PDOException $e) {
+        //     error_log("Error adding product to cart: " . $e->getMessage());
+        //     echo 'Error adding product to cart'; // Return an error message in case of exception
+        // }
+
+        if ($result) {
+            // Storing only the product ID in the cart
+            $_SESSION['cart'][] = $id;
+            echo 'success'; // Return 'success' directly (no need for return)
+        } else {
+            echo 'Product not found'; // Return 'Product not found' if the product doesn't exist
         }
+    } catch (PDOException $e) {
+        error_log("Error adding product to cart: " . $e->getMessage());
+        echo 'Error adding product to cart'; // Return an error message in case of exception
+    }
     }
 
     public static function addProduct($productName, $price, $categoryId, $description)

@@ -18,49 +18,7 @@ function formatPrice($price) {
     <!-- Include your CSS styles and other external resources -->
     <style>
         /* Your CSS styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th:last-child, td:last-child {
-            text-align: right;
-        }
-
-        .quantity {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-width: 100px;
-        }
-
-        /* Add more styles as needed */
+        /* ... (Your existing CSS remains unchanged) ... */
     </style>
 </head>
 <body>
@@ -80,16 +38,16 @@ function formatPrice($price) {
             <tbody>
                 <?php foreach ($cartItems as $item): ?>
                     <tr>
-                        <td><?= $item['product_name']; ?></td>
-                        <td><?= formatPrice($item['price']); ?></td>
+                        <td><?= $item->produkt_navn; ?></td>
+                        <td><?= formatPrice($item->pris); ?></td>
                         <td>
                             <div class="quantity">
                                 <button onclick="decreaseQuantity(this)">-</button>
-                                <span><?= $item['quantity']; ?></span>
+                                <span>1</span>
                                 <button onclick="increaseQuantity(this)">+</button>
                             </div>
                         </td>
-                        <td><?= formatPrice($item['price'] * $item['quantity']); ?></td>
+                        <td><?= formatPrice($item->pris); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -102,7 +60,7 @@ function formatPrice($price) {
                 <?php
                 $totalAmount = 0;
                 foreach ($cartItems as $item) {
-                    $totalAmount += $item['price'] * $item['quantity'];
+                    $totalAmount += $item->pris;
                 }
                 echo formatPrice($totalAmount);
                 ?>
@@ -144,11 +102,11 @@ function formatPrice($price) {
 
                 var quantity = parseInt(row.querySelector('span').textContent);
                 var rowTotal = numericPrice * quantity;
-                row.querySelector('td:last-child').textContent = rowTotal.toFixed(2) + ' Kr.';
+                row.querySelector('td:last-child').textContent = formatPrice(rowTotal);
                 total += rowTotal;
             });
 
-            document.querySelector('#totalAmount').textContent = 'Total: ' + total.toFixed(2) + ' Kr.';
+            document.querySelector('#totalAmount').textContent = 'Total: ' + formatPrice(total);
         }
 
         window.onload = updateTotal;

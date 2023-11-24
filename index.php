@@ -112,11 +112,14 @@ Flight::route('/category_products/@id', function($id){
   Flight::render('layout', array('title' => 'Produkter - NPG'));
 });
 
+Flight::route('/addToCart/@id', function($id){
+  // Call the addToCart method in your ProductController
+  ProductController::addToCart($id);
+});-
+
 Flight::route('/cart', function(){
-  // Fetch cart information (for example, from the session or database)
-  // Replace this with your logic to retrieve cart items
-  $cartItems = []; // Replace this with your logic to retrieve cart items
-  // $categoryProducts = ProductController::addToCart();
+  // Fetch cart information from the session
+  $cartItems = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
   // Pass the cart items to the 'cart' view for rendering
   Flight::render('cart', ['cartItems' => $cartItems], 'body_content');
