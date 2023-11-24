@@ -32,8 +32,35 @@ class ProductController
         }
     }
 
+    public static function getThreeRandomProducts() : array
+    {
+        try {
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmnt = $pdo->prepare(
+                "SELECT produkter.*, kategorier.kategori_navn 
+                FROM produkter 
+                INNER JOIN kategorier ON produkter.kategori_id = kategorier.kategori_id
+                ORDER BY RAND() 
+                LIMIT 3;");
+            $stmnt->execute();
+            $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+
+            return $result;
+        } catch (PDOException $e) {
+            // Log eller håndter fejlen efter behov
+            error_log("Error fetching random products: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ...
+
+    
+
     public static function getProductDetails($productId)
-{
+    {
     try {
         $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
