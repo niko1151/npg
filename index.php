@@ -44,6 +44,30 @@ Flight::route('/checklogin', function(){
   }
 });
 
+Flight::route('/opret_Login', function(){
+  Flight::render('opret_login', array('body'), 'body_content');
+  Flight::render('layout', array('title' => 'Login - NPG'));
+});
+
+Flight::route('/save_Login', function(){
+  $data = Flight::request()->data;
+  $id = Flight::request()->data->id;
+  $FirstName = Flight::request()->data->CreateFirstName;
+  $LastName = Flight::request()->data->CreateLastName;
+  $Email = Flight::request()->data->CreateEmail;
+  $Telefon = Flight::request()->data->CreateTelefonNummer;
+  $Pass = Flight::request()->data->CreatePassword;
+  $Adresse = Flight::request()->data->CreateAdresse;
+  $By = Flight::request()->data->CreateByNavn;
+  $PostNr = Flight::request()->data->CreatePostNummer;
+
+  UserController::createUser($FirstName, $LastName, $Email, $Telefon, $Pass, $Adresse, $By, $PostNr);
+
+  Flight::render("error",["error_title" => "Bruger", "message" => "Din bruger er nu oprettet"], "body_content");
+  Flight::render("layout",["title" => "Login - NPG"]);
+});
+
+
 Flight::route('/logout', function(){
   // Unset all session variables
   session_unset();
