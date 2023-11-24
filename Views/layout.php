@@ -128,8 +128,11 @@
             <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
                 <li><a href="<?= getenv('BASE_URL')?>/logout">logout</a></li>
                 <li><a href="<?= getenv('BASE_URL')?>/profile/<?php echo $_SESSION["user_id"]; ?>" role="button">Profil</a></li>
+                <?php if (isset($_SESSION['user_id']) && ($_SESSION['user_id'] == 1 || $_SESSION['user_id'] == 2)) { ?>
+                 <li><a href="<?= getenv('BASE_URL')?>/admin">Admin</a></li>
+                <?php } ?>
             <?php } else { ?>
-                <li><a href="login">Log ind</a></li>
+                <li><a href="<?= getenv('BASE_URL')?>/login">Log ind</a></li>
             <?php } ?>
             <li class="ml-auto"><a href="<?= getenv('BASE_URL')?>/checkout">Checkout</a></li>
         </ul>
@@ -159,7 +162,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.min.js" integrity="sha256-MlbTFXdOM7EZphnz0OyXQqPt2zBOjfRXCq14CfgSsS0=" crossorigin="anonymous">
-      
+
     </script>
 </body>
 </html>
