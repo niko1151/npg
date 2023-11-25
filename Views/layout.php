@@ -152,7 +152,7 @@
       <ul>
         <li><a href="/npg">Forside</a></li>
         <li><a href="<?= getenv('BASE_URL')?>/category">Kategorier</a></li>
-        <li><a href="<?= getenv('BASE_URL')?>about">Om os</a></li>
+        <li><a href="<?= getenv('BASE_URL')?>/about">Om os</a></li>
       </ul>
       <p>&copy; <?php echo date('Y'); ?> Min Hjemmeside. Alle rettigheder forbeholdes.</p>
     </footer>
