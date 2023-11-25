@@ -29,8 +29,36 @@ class ProductController
         }
     }
 
+    public static function getThreeRandomProducts() : array
+    {
+        try {
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            $stmnt = $pdo->prepare(
+                "SELECT produkter.*, kategorier.kategori_navn 
+                FROM produkter 
+                INNER JOIN kategorier ON produkter.kategori_id = kategorier.kategori_id
+                ORDER BY RAND() 
+                LIMIT 3;");
+            $stmnt->execute();
+            $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+
+            return $result;
+        } catch (PDOException $e) {
+            // Log eller håndter fejlen efter behov
+            error_log("Error fetching random products: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ...
+
+    
+
     public static function getProductDetails($productId)
     {
+
         try {
             $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -71,6 +99,7 @@ class ProductController
         }
     }
 
+
     public static function addToCart($id)
     {
         try {
@@ -105,22 +134,19 @@ class ProductController
     }
     }
 
-    public static function addProduct($productName, $price, $categoryId, $description)
+
+    public static function addProduct($productName, $categoryId,$quantity ,$price, $description, $imageUrl)
     {
         try {
             $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $stmnt = $pdo->prepare(
-                "INSERT INTO produkter (produkt_navn, pris, kategori_id, beskrivelse) 
-                VALUES (:name, :price, :categoryId, :description)"
+                "INSERT INTO produkter (produkt_navn, kategori_id,antal , pris, beskrivelse, billede_url)
+                VALUES (:produkt_navn, :kategori_id, :antal, :pris, :beskrivelse, :billede_url)"
             );
-            $stmnt->bindParam(':name', $productName);
-            $stmnt->bindParam(':price', $price);
-            $stmnt->bindParam(':categoryId', $categoryId);
-            $stmnt->bindParam(':description', $description);
-            $stmnt->execute();
-
-            return true;
+            $stmnt->execute(['produkt_navn'=>$productName, 'kategori_id'=>$categoryId, 'antal'=>$quantity, 'pris'=>$price, 'beskrivelse'=>$description, 'billede_url'=>$imageUrl]);
+            $result = $stmnt->fetch(PDO::FETCH_OBJ); // Hent data som objekter
+            return (bool)$result;
         } catch (PDOException $e) {
             // Log eller håndter fejlen efter behov
             error_log("Error adding product: " . $e->getMessage());
@@ -128,24 +154,22 @@ class ProductController
         }
     }
 
-    public static function updateProduct($productId, $productName, $price, $categoryId, $description)
+    public static function updateProduct($productId,$edit_product_name, $edit_product_category_id,$edit_product_quantity, $edit_product_price, $edit_product_description, $edit_product_imageUrl)
     {
         try {
             $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $stmnt = $pdo->prepare(
                 "UPDATE produkter 
-                SET produkt_navn = :name, pris = :price, kategori_id = :categoryId, beskrivelse = :description
-                WHERE produkt_id = :id"
+                SET produkt_navn = :produkt_navn, kategori_id = :kategori_id, antal = :antal, pris = :pris, beskrivelse = :beskrivelse, billede_url = :billede_url
+                WHERE produkt_id = :produkt_id"
             );
-            $stmnt->bindParam(':id', $productId);
-            $stmnt->bindParam(':name', $productName);
-            $stmnt->bindParam(':price', $price);
-            $stmnt->bindParam(':categoryId', $categoryId);
-            $stmnt->bindParam(':description', $description);
-            $stmnt->execute();
-
-            return true;
+            
+            $stmnt->execute(['produkt_id'=>$productId, 'produkt_navn'=>$edit_product_name, 'kategori_id'=>$edit_product_category_id, 'antal'=>$edit_product_quantity, 'pris'=>$edit_product_price, 'beskrivelse'=>$edit_product_description, 'billede_url'=>$edit_product_imageUrl]);
+            $result = $stmnt->fetch();
+    
+            return $result;
+    
         } catch (PDOException $e) {
             // Log eller håndter fejlen efter behov
             error_log("Error updating product: " . $e->getMessage());
@@ -169,4 +193,6 @@ class ProductController
             return false;
         }
     }
+
+
 }
