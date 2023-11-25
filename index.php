@@ -116,6 +116,7 @@ Flight::route('/category_products/@id', function($id){
   Flight::render('layout', array('title' => 'Produkter - NPG'));
 });
 
+
 Flight::route('/admin', function(){
   $Products = ProductController::getAllProducts();
   $Categories = CategoryController::getAllCategories();
@@ -201,6 +202,21 @@ Flight::route('/admin/product/edit/@prod_id', function($prod_id){
   Flight::render('editproduct', ["editproduct" => $editproduct, "Categories" => $Categories, "prod_id" => $prod_id], 'body_content');
   Flight::render('layout', ['title' => 'Rediger produkt - NPG']);
 });
+
+Flight::route('/addToCart/@id', function($id){
+  // Call the addToCart method in your ProductController
+  ProductController::addToCart($id);
+});-
+
+Flight::route('/cart', function(){
+  // Fetch cart information from the session
+  $cartItems = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+
+  // Pass the cart items to the 'cart' view for rendering
+  Flight::render('cart', ['cartItems' => $cartItems], 'body_content');
+  Flight::render('layout', ['title' => 'Cart - NPG']);
+});
+
 
 
 Flight::start();
