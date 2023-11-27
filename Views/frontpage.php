@@ -40,7 +40,7 @@
 
     .product-card img {
       width: 100%;
-      height: auto;
+      height: 250px;
       max-height: 100%; /* Ensure the image does not exceed the height of the card */
       object-fit: cover;
     }
