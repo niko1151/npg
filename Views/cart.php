@@ -8,17 +8,60 @@ $cartItems = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 function formatPrice($price) {
     return number_format($price, 2) . ' Kr.';
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cart - YourWebShop</title>
+    <title>Cart - NPG</title>
     <!-- Include your CSS styles and other external resources -->
     <style>
         /* Your CSS styles */
-        /* ... (Your existing CSS remains unchanged) ... */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th:last-child, td:last-child {
+            text-align: right;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 100px;
+        }
+
+        /* Add more styles as needed */
     </style>
 </head>
 <body>
@@ -33,11 +76,12 @@ function formatPrice($price) {
                     <th>Pris</th>
                     <th>Antal</th>
                     <th>Total</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($cartItems as $item): ?>
-                    <tr>
+                    <tr data-product-id="<?= $item->produkt_id; ?>">
                         <td><?= $item->produkt_navn; ?></td>
                         <td><?= formatPrice($item->pris); ?></td>
                         <td>
@@ -48,6 +92,7 @@ function formatPrice($price) {
                             </div>
                         </td>
                         <td><?= formatPrice($item->pris); ?></td>
+                        <td><button onclick="removeItem(this)">Remove</button></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -60,7 +105,7 @@ function formatPrice($price) {
                 <?php
                 $totalAmount = 0;
                 foreach ($cartItems as $item) {
-                    $totalAmount += $item->pris;
+                    $totalAmount += $item->pris; // Add the price to the total amount
                 }
                 echo formatPrice($totalAmount);
                 ?>
@@ -69,47 +114,77 @@ function formatPrice($price) {
 
         <div>
             <a href="checkout.php" class="btn btn-primary">Gå til kassen</a>
-            <a href="shop.php" class="btn btn-secondary">Forsæt Shopping</a>
+            <a href="<?= getenv('BASE_URL')?>/product" class="btn btn-secondary">Forsæt Shopping</a>
         </div>
     </div>
 
     <script>
-        function increaseQuantity(button) {
-            var span = button.parentElement.querySelector('span');
-            var quantity = parseInt(span.textContent);
-            quantity++;
+    function increaseQuantity(button) {
+        var span = button.parentElement.querySelector('span');
+        var quantity = parseInt(span.textContent);
+        quantity++;
+        span.textContent = quantity;
+        updateTotal();
+    }
+
+    function decreaseQuantity(button) {
+        var span = button.parentElement.querySelector('span');
+        var quantity = parseInt(span.textContent);
+        if (quantity > 1) {
+            quantity--;
             span.textContent = quantity;
             updateTotal();
         }
+    }
 
-        function decreaseQuantity(button) {
-            var span = button.parentElement.querySelector('span');
+    function removeItem(button) {
+    var row = button.closest('tr');
+    var productId = row.getAttribute('data-product-id'); // Get the product ID from the row
+
+    // Send an AJAX request to your server to remove the item from the session
+    fetch('<?= getenv('BASE_URL')?>/removeFromCart', {
+        method: 'POST',
+        body: JSON.stringify({ productId: productId }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            row.remove();
+            updateTotal();
+        } else {
+            console.log('Failed to remove the item');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+    }
+
+    function updateTotal() {
+        var rows = document.querySelectorAll('tbody tr');
+        var total = 0;
+
+        rows.forEach(function(row) {
+            var priceText = row.querySelector('td:nth-child(2)').textContent;
+            var numericPrice = parseFloat(priceText.replace(' Kr.', '').replace(',', '.')); // Parse the price string directly
+
+            var span = row.querySelector('span');
             var quantity = parseInt(span.textContent);
-            if (quantity > 1) {
-                quantity--;
-                span.textContent = quantity;
-                updateTotal();
-            }
-        }
 
-        function updateTotal() {
-            var rows = document.querySelectorAll('tbody tr');
-            var total = 0;
+            var rowTotal = numericPrice * quantity;
+            row.querySelector('td:nth-child(4)').textContent = formatPrice(rowTotal);
+            total += rowTotal;
+        });
 
-            rows.forEach(function(row) {
-                var priceText = row.querySelector('td:nth-child(2)').textContent;
-                var numericPrice = parseFloat(priceText); // Parse the price string directly
+        document.querySelector('#totalAmount').textContent = 'Total: ' + formatPrice(total);
+    }
 
-                var quantity = parseInt(row.querySelector('span').textContent);
-                var rowTotal = numericPrice * quantity;
-                row.querySelector('td:last-child').textContent = formatPrice(rowTotal);
-                total += rowTotal;
-            });
+    function formatPrice(price) {
+        return parseFloat(price).toFixed(2) + ' Kr.';
+    }
 
-            document.querySelector('#totalAmount').textContent = 'Total: ' + formatPrice(total);
-        }
-
-        window.onload = updateTotal;
-    </script>
+    window.onload = updateTotal;
+</script>
 </body>
 </html>

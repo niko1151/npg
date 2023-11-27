@@ -81,28 +81,29 @@ class ProductController
             $stmnt->execute([$id]);
             $result = $stmnt->fetch(PDO::FETCH_OBJ);
     
-        //     if ($result) {
-        //         $_SESSION['cart'][] = $result;
-        //         echo 'success'; // Return 'success' directly (no need for return)
-        //     } else {
-        //         echo 'Product not found'; // Return 'Product not found' if the product doesn't exist
-        //     }
+            if ($result) {
+                $_SESSION['cart'][] = $result;
+                echo 'success'; // Return 'success' directly (no need for return)
+            } else {
+                echo 'Product not found'; // Return 'Product not found' if the product doesn't exist
+            }
+        } catch (PDOException $e) {
+            error_log("Error adding product to cart: " . $e->getMessage());
+            echo 'Error adding product to cart'; // Return an error message in case of exception
+        }
+
+        // if ($result) {
+        //     // Storing only the product ID in the cart
+        //     $_SESSION['cart'][] = $id;
+        //     echo 'success'; // Return 'success' directly (no need for return)
+        // } else {
+        //     echo 'Product not found'; // Return 'Product not found' if the product doesn't exist
+        // }
+
         // } catch (PDOException $e) {
         //     error_log("Error adding product to cart: " . $e->getMessage());
         //     echo 'Error adding product to cart'; // Return an error message in case of exception
         // }
-
-        if ($result) {
-            // Storing only the product ID in the cart
-            $_SESSION['cart'][] = $id;
-            echo 'success'; // Return 'success' directly (no need for return)
-        } else {
-            echo 'Product not found'; // Return 'Product not found' if the product doesn't exist
-        }
-    } catch (PDOException $e) {
-        error_log("Error adding product to cart: " . $e->getMessage());
-        echo 'Error adding product to cart'; // Return an error message in case of exception
-    }
     }
 
     public static function addProduct($productName, $price, $categoryId, $description)

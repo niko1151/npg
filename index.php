@@ -115,7 +115,7 @@ Flight::route('/category_products/@id', function($id){
 Flight::route('/addToCart/@id', function($id){
   // Call the addToCart method in your ProductController
   ProductController::addToCart($id);
-});-
+});
 
 Flight::route('/cart', function(){
   // Fetch cart information from the session
@@ -124,6 +124,11 @@ Flight::route('/cart', function(){
   // Pass the cart items to the 'cart' view for rendering
   Flight::render('cart', ['cartItems' => $cartItems], 'body_content');
   Flight::render('layout', ['title' => 'Cart - NPG']);
+});
+
+Flight::route('/removeFromCart', function(){
+  // Call the addToCart method in your ProductController
+  Flight::render('removeFromCart', [], 'body_content');
 });
 
 Flight::start();
