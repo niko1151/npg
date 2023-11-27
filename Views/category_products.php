@@ -8,6 +8,7 @@
                         $imagePath = isset($product->billede_url) && !empty($product->billede_url)
                             ? "../npg/images/" . $product->billede_url
                             : '../npg/images/NPGaming.png';
+                            
                     ?>
                     <div style="margin: 5px; padding: 10px; box-sizing: border-box;">
                         <img src="<?= $imagePath; ?>" class="card-img-top" alt="Product Image" style="width: 100%; height: 450px; object-fit: cover;">

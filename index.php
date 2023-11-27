@@ -1,4 +1,6 @@
 <?php
+
+
 use tec\npg;
 use tec\npg\Controllers\{UserController,CategoryController, ProductController};
 
@@ -198,5 +200,11 @@ Flight::route('/admin/product/edit/@prod_id', function($prod_id){
   Flight::render('layout', ['title' => 'Rediger produkt - NPG']);
 });
 
+// routes.php eller tilsvarende
+Flight::route('/product/search', function(){
+  $searchQuery = Flight::request()->query['search'];
+  $searchResults = ProductController::searchProducts($searchQuery);
+  Flight::render('search_live_results', ['searchResults' => $searchResults]);
+});
 
 Flight::start();

@@ -32,6 +32,27 @@ class ProductController
         }
     }
 
+    public static function searchProducts($query) : array
+    {
+        try {
+            $pdo = new PDO("mysql:host=127.0.0.1:3306;dbname=webshop", "root", "");
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+            $stmnt = $pdo->prepare(
+                "SELECT * FROM produkter WHERE produkt_navn LIKE :query"
+            );
+            $stmnt->bindValue(':query', '%' . $query . '%', PDO::PARAM_STR);
+            $stmnt->execute();
+            $result = $stmnt->fetchAll(PDO::FETCH_OBJ);
+    
+            return $result;
+        } catch (PDOException $e) {
+            // Log eller håndter fejlen efter behov
+            error_log("Error searching products: " . $e->getMessage());
+            return []; // Returnerer et tomt array i tilfælde af fejl
+        }
+    }
+
     public static function getProductDetails($productId)
 {
     try {
