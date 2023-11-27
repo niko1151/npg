@@ -12,10 +12,14 @@ require __DIR__ . '/vendor/autoload.php';
  $dotenv = Dotenv\Dotenv::create(__DIR__);
  $dotenv->load();
 
-Flight::route('/', function(){
-  Flight::render('frontpage', array('body'), 'body_content');
+ Flight::route('/', function(){
+  // Hent tre tilfældige produkter
+  $randomProducts = ProductController::getThreeRandomProducts();
+  
+  // Send produkterne til visning
+  Flight::render('Frontpage', ["randomProducts" => $randomProducts], 'body_content');
   Flight::render('layout', array('title' => 'Forside - NPG'));
- });
+});
 
  Flight::route('/about', function(){
   Flight::render('about', array('body'), 'body_content');
