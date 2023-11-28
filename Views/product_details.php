@@ -1,19 +1,4 @@
 <?php
-//require_once 'vendor/autoload.php';
-
-// Få produkt-ID fra URL-parametret
-//$productId = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
-
-// Hent produkt detaljer
-//$productDetails = ProductController::getProductDetails($productId);
-
-// if (!$productDetails) {
-//     // Produktet blev ikke fundet, håndter fejl, f.eks. viderestil til en fejlsiden
-//     header("Location: error.php");
-//     exit();
-// }
-
-// Vis produkt detaljer
 ?>
 
 <!DOCTYPE html>

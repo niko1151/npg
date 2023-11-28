@@ -1,9 +1,17 @@
+<!-- Frontpage.php -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <!-- Meta tags for character set and viewport -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title for the page -->
   <title>Forside - NPG</title>
+
+  <!-- Internal CSS styles for page layout and components -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -103,6 +111,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Velkommen til NPG</h1>
@@ -113,12 +122,13 @@
             <div class="col-4 mb-3 product-card">
                 <div class="card border-dark" style="background-color: #333;">
                     <?php
+                        // Bestem billedstien baseret på tilgængeligheden af billedet i databasen
                         $imagePath = isset($product->billede_url) && !empty($product->billede_url)
                             ? "../npg/images/" . $product->billede_url
                             : '../npg/images/NPGaming.png';
                     ?>
                     <div style="padding: 10px; box-sizing: border-box;">
-                        <img src="<?= $imagePath; ?>" class="card-img-top" alt="Product Image">
+                        <img src="<?= $imagePath; ?>" class="card-img-top" alt="Produktbillede">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><?= $product->produkt_navn; ?></h5>
@@ -143,7 +153,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="descriptionModalLabel">Produkt Beskrivelse</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Luk">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

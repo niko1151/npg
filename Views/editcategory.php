@@ -74,7 +74,7 @@
     <!-- Rediger Kategori Formular -->
     <h2>Rediger Kategori</h2>
     <form method="post" action="<?= getenv('BASE_URL')?>/admin/categories/update" id="editCategoryForm">
-        <!-- Inputfelt til fast kategoriID (kan skjules, hvis det ønskes) -->
+        <!-- Inputfelt til fast kategoriID -->
         <input type="hidden" name="edit_category_id" id="category_id_to_edit" value="<?= $cat_id; ?>">
 
         <!-- Inputfelter for redigering -->

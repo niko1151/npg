@@ -1,15 +1,19 @@
-<!-- layout.php -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <!-- Titel tag med dynamisk titel baseret på variabelen $title -->
   <title><?= $title; ?></title>
+
+  <!-- Eksterne ting: Google Fonts, jQuery, Font Awesome, Bootstrap CSS -->
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i,900" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css"
     integrity="sha384-87DrmpqHRiY8hPLIr7ByqhPIywuSsjuQAfMXAE0sMUpY3BM7nXjf+mLIUSvhDArs" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Intern CSS-styling -->
   <style>
     .topBar {
       background-color: #444;
@@ -122,17 +126,21 @@
     }
   </style>
 
+  <!-- Charset definition -->
   <meta charset="utf-8">
 </head>
 
 <body>
+  <!-- Navbar med navigation og søgeformular -->
   <div class="navbar">
+    <!-- Venstre navigation -->
     <ul class="left-links">
       <li><a href="/npg">Forside</a></li>
       <li><a href="<?= getenv('BASE_URL')?>/category">Kategorier</a></li>
       <li><a href="<?= getenv('BASE_URL')?>/product">Alle Produkter</a></li>
       <li><a href="<?= getenv('BASE_URL')?>/about">Om os</a></li>
     </ul>
+
     <!-- Søgeformular i navbar -->
     <div class="search-icon">
       <form method="GET" action="<?= getenv('BASE_URL')?>/product/search" id="live-search-form">
@@ -141,8 +149,11 @@
         <button type="submit">Søg</button>
       </form>
     </div>
+
     <!-- Container til live søge resultater -->
     <div id="live-search-results"></div>
+
+    <!-- Højre navigation og brugerlinks -->
     <ul class="right-links">
       <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) { ?>
         <li><a href="<?= getenv('BASE_URL')?>/logout">logout</a></li>
@@ -157,10 +168,12 @@
     </ul>
   </div>
 
+  <!-- Hovedindholdet af siden -->
   <main role="main" class="container">
     <?php echo $body_content; ?>
   </main>
 
+  <!-- Sidefod med kontaktinformation og navigationslinks -->
   <footer class="footer">
     <p>NPG</p>
     <p>Telegrafvej 9, 2750 Ballerup</p>
@@ -172,34 +185,33 @@
     <p>&copy; <?php echo date('Y'); ?> Min Hjemmeside. Alle rettigheder forbeholdes.</p>
   </footer>
 
-  <!-- ... (eksisterende scripts) ... -->
   <!-- JavaScript for live search -->
   <script>
-  $(document).ready(function () {
-    $('#live-search-form').submit(function (event) {
-      event.preventDefault();
+    $(document).ready(function () {
+      $('#live-search-form').submit(function (event) {
+        event.preventDefault();
 
-      var searchTerm = $('#search').val();
+        var searchTerm = $('#search').val();
 
-      if (searchTerm.length >= 2) {
-        $.ajax({
-          url: '<?= getenv('BASE_URL') ?>/product/search',
-          method: 'GET',
-          data: { search: searchTerm },
-          success: function (data) {
-            console.log('AJAX success:', data); // Tilføjet console.log
-            $('#live-search-results').html(data);
-          },
-          error: function (error) {
-            console.error('Fejl ved søgning:', error);
-          }
-        });
-      } else {
-        $('#live-search-results').html('');
-      }
+        if (searchTerm.length >= 2) {
+          $.ajax({
+            url: '<?= getenv('BASE_URL') ?>/product/search',
+            method: 'GET',
+            data: { search: searchTerm },
+            success: function (data) {
+              console.log('AJAX success:', data); // Tilføjet console.log
+              $('#live-search-results').html(data);
+            },
+            error: function (error) {
+              console.error('Fejl ved søgning:', error);
+            }
+          });
+        } else {
+          $('#live-search-results').html('');
+        }
+      });
     });
-  });
-</script>
+  </script>
 </body>
 
 </html>
