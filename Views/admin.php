@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <!-- Meta tags for karakterkodning og viewport -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Side</title>
 
-    <!-- Intern CSS-stil for side layout og komponenter -->
+
     <style>
         h1, h2 {
             color: white;
@@ -80,7 +80,7 @@
 <body>
     <h1>Admin Side</h1>
 
-    <!-- Kategori Formular -->
+    <!-- Formular til oprettelse af Kategori -->
     <h2>Opret Kategori</h2>
     <form method="post" action="<?= getenv('BASE_URL')?>/admin/categories/process">
         <label for="category_name">Kategori Navn:</label>
@@ -88,7 +88,7 @@
         <button type="submit" class="create">Opret</button>
     </form>
 
-    <!-- Produkt Formular -->
+    <!-- Formular til oprettelse af produkter -->
     <h2>Opret Produkt</h2>
     <form method="post" action="<?= getenv('BASE_URL')?>/admin/products/process">>
         <input type="hidden" name="product_form" value="true">
