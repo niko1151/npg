@@ -1,10 +1,15 @@
+<!-- admin_edit_product.php -->
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <!-- Meta tags for character set and viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page - Rediger Produkt</title>
+
+    <!-- Internal CSS styles for page layout and components -->
     <style>
         h1, h2 {
             color: #333;
@@ -69,24 +74,24 @@
 </head>
 
 <body>
-<h1>Admin Page</h1>
+    <h1>Admin Page</h1>
 
-<!-- Rediger Produkt Formular -->
+    <!-- Rediger Produkt Formular -->
     <h2>Rediger Produkt</h2>
     <form method="post" action="<?= getenv('BASE_URL')?>/admin/products/update" id="editProductForm">
         <!-- Inputfelt til fast produktID (kan skjules, hvis det ønskes) -->
         <input type="hidden" name="product_id_to_edit" id="product_id_to_edit" value="<?= $prod_id; ?>">
 
-     <!-- Inputfelter for redigering -->
+        <!-- Inputfelter for redigering -->
         <label for="product_name">Produkt Navn:</label>
         <input type="text" name="edit_product_name" id="selectedValue" value="<?= isset($editproduct->produkt_navn) ? $editproduct->produkt_navn : ''; ?>" required>
 
         <label for="product_category">Vælg kategori:</label>
         <select name="edit_product_category_id" required>
-           <option value="">Vælg kategori</option>
-          <?php foreach ($Categories as $category): ?>
-              <option value="<?php echo $category->kategori_id; ?>"><?php echo $category->kategori_navn; ?></option>
-          <?php endforeach; ?>
+            <option value="">Vælg kategori</option>
+            <?php foreach ($Categories as $category): ?>
+                <option value="<?php echo $category->kategori_id; ?>"><?php echo $category->kategori_navn; ?></option>
+            <?php endforeach; ?>
         </select>
 
         <label for="product_quantity">Antal:</label>
