@@ -71,7 +71,7 @@
 <body>
     <h1>Admin Page</h1>
 
-    <!-- Rediger Kategori Formular -->
+    <!-- Rediger Kategori som poster dataen /admin/categories/update i index -->
     <h2>Rediger Kategori</h2>
     <form method="post" action="<?= getenv('BASE_URL')?>/admin/categories/update" id="editCategoryForm">
         <!-- Inputfelt til fast kategoriID -->

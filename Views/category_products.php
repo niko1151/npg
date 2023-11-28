@@ -6,7 +6,7 @@
             <div class="col-md-4 mb-3">
                 <!-- Produktkort med mørk kant og baggrundsfarve -->
                 <div class="card border-dark" style="background-color: #333; width: 100%;">
-                    <!-- Billedhåndtering: Hent billedet fra databasen, eller brug standardbillede -->
+                    <!-- Billedhåndtering: Henter billedet fra databasen, ellers bruger den standardbillede -->
                     <?php
                         $imagePath = isset($product->billede_url) && !empty($product->billede_url)
                             ? "../npg/images/" . $product->billede_url
@@ -24,7 +24,7 @@
                         <!-- Pris- og kategoritekst -->
                         <p class="card-text"><strong>Pris:</strong> <?= number_format($product->pris, 2); ?> DKK</p>
                         <p class="card-text"><strong>Kategori:</strong> <?= $product->kategori_navn; ?></p>
-                        <!-- Knapper til detaljeret visning og tilføjelse til kurv -->
+                        <!-- Hvis der bliver trykket på vis detaljer så kalder den på /product_details/ -->
                         <a href="<?= getenv('BASE_URL')?>/product_details/<?= $product->produkt_id; ?>" class="btn btn-info btn-sm">
                             Vis Detaljer
                         </a>

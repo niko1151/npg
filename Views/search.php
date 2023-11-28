@@ -1,4 +1,3 @@
-<!-- Formular til søgning med GET-metoden og id'et "live-search-form" -->
 <form method="GET" id="live-search-form">
     <label for="search">Søg efter produkter:</label>
     <!-- Inputfelt til søgetermer med id'et "search" -->
@@ -13,7 +12,6 @@
 
 <!-- JavaScript til live søgning -->
 <script>
-    // Vent på, at dokumentet er klar
     $(document).ready(function () {
         // Lyt efter inputbegivenheder i søgefeltet med id'et "search"
         $('#search').on('input', function () {
