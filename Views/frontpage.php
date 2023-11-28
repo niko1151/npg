@@ -8,8 +8,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Title for the page -->
-  <title>Forside - NPG</title>
 
   <!-- Internal CSS styles for page layout and components -->
   <style>
@@ -114,7 +112,7 @@
 
 <body>
   <div class="container">
-    <h1>Velkommen til NPG</h1>
+    <h1>Velkommen til NP Gaming</h1>
     <p><?php echo date('Y-m-d'); ?></p>
 
     <div class="row">
