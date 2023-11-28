@@ -1,6 +1,8 @@
+<!-- Formularen til oprettelse af login -->
 <form id="info-input" method="post" action="<?= getenv('BASE_URL')?>/save_Login" onsubmit="return validatePassword();">
 
-<div class="form-group">
+    <!-- Input-felter for brugeroplysninger -->
+    <div class="form-group">
         <input required type="text" name="CreateFirstName" placeholder="indtast Fornavn" class="btn-lg btn-block mt-4">
     </div>
     <div class="form-group">
@@ -28,26 +30,30 @@
     <div class="form-group">
         <input required type="text" name="CreatePostNummer" placeholder="indtast Postnummer" class="btn-lg btn-block mt-4">
     </div>
-</br>
 
+    <br>
+
+    <!-- Knapper til at sende eller annullere oprettelsesprocessen -->
     <div class="form-group">
         <input type="submit" class="btn btn-success" value="Send">
         <a class="btn btn-danger" href="<?= getenv('BASE_URL')?>">Cancel</a>
     </div>
-</form>  
+</form>
 
+<!-- JavaScript til validering af adgangskoder -->
 <script>
     function validatePassword() {
         var password = document.getElementById("CreatePassword").value;
         var confirmPassword = document.getElementById("ConfirmPassword").value;
         var errorSpan = document.getElementById("passwordError");
 
+        // Valider, om adgangskoderne stemmer overens
         if (password !== confirmPassword) {
-            errorSpan.textContent = "Passwords stemmer ikke overens med hinanden!";
-            return false; // Prevent form submission
+            errorSpan.textContent = "Adgangskoderne stemmer ikke overens!";
+            return false; // Forhindrer formularafsendelse
         } else {
-            errorSpan.textContent = ""; // Clear error message if passwords match
-            return true; // Allow form submission
+            errorSpan.textContent = ""; // Ryd fejlmeddelelse, hvis adgangskoderne er ens
+            return true; // Tillader formularafsendelse
         }
     }
 </script>

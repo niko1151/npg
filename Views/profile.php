@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <title>User Profile - Webshop</title>
-    <!-- Your CSS and other external resources -->
+    <title>Brugerprofil - Webshop</title>
     <style>
-        /* Your CSS styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -36,17 +34,18 @@
             padding-top: 20px;
         }
 
-        /* Add more styles as needed */
     </style>
 </head>
 <body>
     <header>
-        <h1>User Profile</h1>
+        <h1>Brugerprofil</h1>
     </header>
 
     <div class="container">
+        <!-- Sektion til brugerinformation -->
         <div class="user-info">
-            <h2>User Information</h2>
+            <h2>Brugerinformation</h2>
+            <!-- Visning af brugeroplysninger -->
             <p><strong>Navn:</strong> <?= $profile->fornavn." ". $profile->efternavn; ?></p>
             <p><strong>Email:</strong> <?= $profile->email; ?></p>
             <p><strong>Telefon Nr.:</strong> <?= $profile->telefonnummer; ?></p>
@@ -54,28 +53,27 @@
             <p><strong>By & Postnummer:</strong> <?= $profile->by_navn." ".$profile->postnummer; ?></p>
         </div>
 
+        <!-- Sektion til ordrehistorik -->
         <div class="order-history">
-            <h2>Order History</h2>
+            <h2>Ordrehistorik</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Total Amount</th>
+                        <th>Ordre ID</th>
+                        <th>Dato</th>
+                        <th>Totalbeløb</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- Eksempel for ordrehistorik -->
                     <tr>
                         <td>1</td>
                         <td>2023-11-01</td>
                         <td>$120.00</td>
                     </tr>
-                    <!-- Add more rows for order history -->
                 </tbody>
             </table>
         </div>
-
-        <!-- Add more sections for account settings, etc. -->
 
     </div>
 </body>
