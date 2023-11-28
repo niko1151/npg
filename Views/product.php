@@ -44,6 +44,7 @@
     </div>
 </div>
 <!-- JavaScript for håndtering af visning af beskrivelse og tilføjelse til kurven -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Vis beskrivelse knap
@@ -54,14 +55,28 @@
                 $('#descriptionModal').modal('show');
             });
         });
-
-        // Tilføj til kurven knap
-        document.querySelectorAll('.add-to-cart').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var productId = this.getAttribute('data-product-id');
-                // Implementer logik for at tilføje produktet til indkøbskurven, f.eks. via AJAX
-                alert('Produktet med ID ' + productId + ' blev tilføjet til kurven!');
-            });
-        });
     });
+
+    jQuery('.add-to-cart').on('click', function() {
+    var productId = this.getAttribute('data-product-id');
+
+    jQuery.ajax({
+        type: 'POST',
+        url: '<?= getenv('BASE_URL')?>/addToCart/' + productId,
+        success: function(response) {
+    console.log('Response from server:', response);
+    if (response === 'success') {
+        alert('Product added to cart!');
+    } else {
+        console.error('Unexpected server response:', response);
+    }
+},
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        },
+        complete: function() {
+            console.log('AJAX request completed');
+        }
+    });
+});
 </script>
