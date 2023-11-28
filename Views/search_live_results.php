@@ -1,7 +1,7 @@
 <?php
 // Tjekker om søgeresultaterne ikke er tomme
 if (!empty($searchResults)) :
-    // Starter en ordnet liste til visning af søgeresultaterne
+    // Starter en liste til visning af søgeresultaterne
     ?>
     <ul>
         <?php
