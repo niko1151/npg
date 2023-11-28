@@ -60,8 +60,6 @@ function formatPrice($price) {
             justify-content: space-between;
             max-width: 100px;
         }
-
-        /* Add more styles as needed */
     </style>
 </head>
 <body>
@@ -76,7 +74,7 @@ function formatPrice($price) {
                     <th>Pris</th>
                     <th>Antal</th>
                     <th>Total</th>
-                    <th>Action</th>
+                    <th>Fjern</th>
                 </tr>
             </thead>
             <tbody>
@@ -113,7 +111,7 @@ function formatPrice($price) {
         </div>
 
         <div>
-            <a href="checkout.php" class="btn btn-primary">Gå til kassen</a>
+            <a href="<?= getenv('BASE_URL')?>/checkout" class="btn btn-primary">Gå til kassen</a>
             <a href="<?= getenv('BASE_URL')?>/product" class="btn btn-secondary">Forsæt Shopping</a>
         </div>
     </div>

@@ -32,6 +32,11 @@ Flight::route('/checklogin', function(){
   if($login = UserController::checkUserLogin($email, $adgangskode))
   {
     $_SESSION['user_id'] = $login->kunde_id; // Store user ID or any relevant data
+    // $_SESSION['user_name'] = $login->fornavn;
+    // $_SESSION['user_id'] = $login->email;
+    // $_SESSION['user_id'] = $login->adresse;
+    // $_SESSION['user_id'] = $login->kunde_id;
+    // $_SESSION['user_id'] = $login->kunde_id;
     $_SESSION['logged_in'] = true; // Set a flag to indicate the user is logged in
 
     Flight::render("error",["error_title" => "Sådan!!", "message" => "Du er nu logget ind"], "body_content");
@@ -129,6 +134,29 @@ Flight::route('/cart', function(){
 Flight::route('/removeFromCart', function(){
   // Call the addToCart method in your ProductController
   Flight::render('removeFromCart', [], 'body_content');
+});
+
+Flight::route('/checkout', function(){
+  // Call the addToCart method in your ProductController
+  Flight::render('checkout', [], 'body_content');
+  Flight::render('layout', ['title' => 'Cart - NPG']);
+});
+
+Flight::route('/process_checkout', function(){
+  // Call the addToCart method in your ProductController
+
+  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+
+
+    Flight::render("error",["error_title" => "Checkout", "message" => "Din ordre er nu gennemført - er logget ind"], "body_content");
+    Flight::render("layout",["title" => "Login - NPG"]);
+    unset($_SESSION['cart']);
+    } else { 
+
+    Flight::render("error",["error_title" => "Checkout", "message" => "Din ordre er nu gennemført"], "body_content");
+    Flight::render("layout",["title" => "Login - NPG"]);
+    unset($_SESSION['cart']);
+    }
 });
 
 Flight::start();
