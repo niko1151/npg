@@ -19,7 +19,8 @@ INSERT INTO kategorier (kategori_navn) VALUES
     ('Printere'),
     ('Lagring'),
     ('Netværksudstyr'),
-    ('Gaming Udstyr');
+    ('Gaming Udstyr'),
+	('Gamer Computere');
 
 -- Opret tabellen 'produkter' til at gemme oplysninger om computerprodukter
 CREATE TABLE produkter (
@@ -83,7 +84,12 @@ INSERT INTO produkter (produkt_navn, kategori_id, antal, pris, beskrivelse, bill
     -- Kategori 10: Gaming Udstyr
     ('RGB Gaming Keyboard', 10, 10, 89.99, 'Gamingtastatur med RGB-belysning og programmerbare taster.', ''),
     ('Gaming Mouse Pad', 10, 18, 24.99, 'Stor musemåtte designet til præcis gaming.', ''),
-    ('Gaming Chair', 10, 8, 199.99, 'Ergonomisk gamingstol for komfort under lange spilsessioner.', '');
+    ('Gaming Chair', 10, 8, 199.99, 'Ergonomisk gamingstol for komfort under lange spilsessioner.', ''),
+    
+    -- Kategori 11: Gaming Computere
+	('High-Performance Gaming PC', 11, 5, 1499.99, 'Kraftfuld gamingcomputer med top-of-the-line hardware for ultimativ ydeevne.', ''),
+	('Gaming Computer', 11, 12, 1199.99, 'Kompakt gaming computer med kraftfulde komponenter i et pladsbesparende design.', ''),
+	('Gaming Laptop', 11, 15, 1699.99, 'Bærbar gamingcomputer med høj ydeevne, perfekt til gaming on-the-go.', '');
 -- Opret tabellen 'kunder' til at gemme kundeoplysninger
 CREATE TABLE kunder (
     kunde_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -101,9 +107,7 @@ CREATE TABLE kunder (
 INSERT INTO kunder (fornavn, efternavn, email, adgangskode, adresse, by_navn, postnummer, telefonnummer, adminP) VALUES
 	('Nikolai', 'Flodin', 'nikolai@gmail.com', 'test123', 'telegrafvej 9', 'Ballerup', 2750, 42641422,1),
 	('Mathias', 'Plum', 'plum@gmail.com', 'onkel123', 'telegrafvej 19', 'Skovlunde ', 2740,12345678,1 ),
-  ('Bo', 'Andersen', 'bo@gmail.com', 'bo123', 'telegrafvej 29', 'Herlev', 2730, 11223344,0);
-
-
+    ('Bo', 'Andersen', 'bo@gmail.com', 'bo123', 'telegrafvej 29', 'Herlev', 2730, 11223344,0);
 
 
 -- Opret tabellen 'ordrer' til at gemme ordreoplysninger
